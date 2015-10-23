@@ -22,7 +22,7 @@ html {
     list-style: none;
     margin: 0;
     outline: none;
-    padding: 0;
+    padding: 2px;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	  box-sizing: border-box;

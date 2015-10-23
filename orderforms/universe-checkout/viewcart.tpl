@@ -1,12 +1,36 @@
 <style type="text/css">
 <!--
 	.steps li.step3 {  	
-		background: #d07f02 url("templates/{$template}/images/menuhover.png") top left repeat-x !important;
+		background: #0f9d58 url("templates/{$template}/images/menuhover.png") top left repeat-x !important;
 		color: #fff;
 }
 -->
-</style>
+ /* added by Chen */
+#container {
+    width:960px;
+    margin: auto;
+    align:center;
+    /*width: 90%;*/
+}
 
+#content {
+    float:left;
+    min-width:370px;
+}
+
+#sidebar {
+    float:left;
+    width:475px;
+}
+
+#footer {
+    clear:both;
+}
+
+
+
+</style>
+<!-- step color was #d07f02-->
 <link rel="stylesheet" type="text/css" href="templates/orderforms/{$carttpl}/style.css" />
 <script language="javascript">
     // Define state tab index value
@@ -34,6 +58,20 @@ function emptyCart(type,num) {
         window.location = 'cart.php?a=empty';
     }
 }
+function recalctotalsAndReflesh( i ) {
+    //console.log( "billingcycle"+i);
+    var billingcycle=document.getElementById("billingcycle"+i).value;
+    //console.log( billingcycle );
+    jQuery.post(
+        "cart.php", 
+        'ajax=1&a=confproduct&configure=true&billingcycle='+billingcycle+'&i='+i,
+        function(data){
+            //console.log("return data: ");
+            window.location.reload(false);
+        }
+    );
+    return false;
+}
 </script>{/literal}
 <script>
 window.langPasswordStrength = "{$LANG.pwstrength}";
@@ -41,187 +79,12 @@ window.langPasswordWeak = "{$LANG.pwstrengthweak}";
 window.langPasswordModerate = "{$LANG.pwstrengthmoderate}";
 window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
 </script>
-
 <div id="order-modern">
 
     <div class="text-center">
         <h1>{$LANG.cartreviewcheckout}</h1>
     </div>
 
-    {if $errormessage}
-        <div class="errorbox" style="display:block;">
-            {$errormessage|replace:'<li>':' &nbsp;#&nbsp; '} &nbsp;#&nbsp;
-        </div>
-    {elseif $promotioncode && $rawdiscount eq "0.00"}
-        <div class="errorbox" style="display:block;">
-            {$LANG.promoappliedbutnodiscount}
-        </div>
-    {/if}
-
-    {if $bundlewarnings}
-        <div class="cartwarningbox">
-            <strong>{$LANG.bundlereqsnotmet}</strong><br />
-            {foreach from=$bundlewarnings item=warning}
-                {$warning}<br />
-            {/foreach}
-        </div>
-    {/if}
-
-    {if !$loggedin && $currencies}
-        <div class="currencychooser">
-            <div class="btn-group" role="group">
-                {foreach from=$currencies item=curr}
-                    <a href="cart.php?a=view&currency={$curr.id}" class="btn btn-default{if $currency.id eq $curr.id} active{/if}">
-                        <img src="{$BASE_PATH_IMG}/flags/{if $curr.code eq "AUD"}au{elseif $curr.code eq "CAD"}ca{elseif $curr.code eq "EUR"}eu{elseif $curr.code eq "GBP"}gb{elseif $curr.code eq "INR"}in{elseif $curr.code eq "JPY"}jp{elseif $curr.code eq "USD"}us{elseif $curr.code eq "ZAR"}za{else}na{/if}.png" border="0" alt="" />
-                        {$curr.code}
-                    </a>
-                {/foreach}
-            </div>
-        </div>
-    {/if}
-
-    <form method="post" action="{$smarty.server.PHP_SELF}?a=view">
-
-        <table class="cart" cellspacing="1">
-            <tr>
-                <th width="60%">{$LANG.orderdesc}</th>
-                <th width="40%">{$LANG.orderprice}</th>
-            </tr>
-
-            {foreach key=num item=product from=$products}
-                <tr class="carttableproduct">
-                    <td>
-                        <strong><em>{$product.productinfo.groupname}</em> - {$product.productinfo.name}</strong>{if $product.domain} ({$product.domain}){/if}<br />
-                        {if $product.configoptions}
-                            {foreach key=confnum item=configoption from=$product.configoptions}
-                                &nbsp;&raquo; {$configoption.name}: {if $configoption.type eq 1 || $configoption.type eq 2}{$configoption.option}{elseif $configoption.type eq 3}{if $configoption.qty}{$LANG.yes}{else}{$LANG.no}{/if}{elseif $configoption.type eq 4}{$configoption.qty} x {$configoption.option}{/if}<br />
-                            {/foreach}
-                        {/if}
-                        <a href="{$smarty.server.PHP_SELF}?a=confproduct&i={$num}" class="cartedit">[{$LANG.carteditproductconfig}]</a>
-                        <a href="#" onclick="removeItem('p','{$num}');return false" class="cartremove">[{$LANG.cartremove}]</a>
-                        {if $product.allowqty}
-                        <br /><br />
-                        <div align="right">{$LANG.cartqtyenterquantity} <input type="text" name="qty[{$num}]" size="3" value="{$product.qty}" /> <input type="submit" value="{$LANG.cartqtyupdate}" class="btn btn-default btn-sm" /></div>
-                        {/if}
-                    </td>
-                    <td class="text-center">
-                        <strong>{$product.pricingtext}{if $product.proratadate}<br />({$LANG.orderprorata} {$product.proratadate}){/if}</strong>
-                    </td>
-                </tr>
-                {foreach key=addonnum item=addon from=$product.addons}
-                    <tr class="carttableproduct">
-                        <td><strong>{$LANG.orderaddon}</strong> - {$addon.name}</td>
-                        <td class="text-center"><strong>{$addon.pricingtext}</strong></td>
-                    </tr>
-                {/foreach}
-            {/foreach}
-
-            {foreach key=num item=addon from=$addons}
-                <tr class="carttableproduct">
-                    <td>
-                        <strong>{$addon.name}</strong><br />
-                        {$addon.productname}{if $addon.domainname} - {$addon.domainname}<br />{/if}
-                        <a href="#" onclick="removeItem('a','{$num}');return false" class="cartremove">[{$LANG.cartremove}]</a>
-                    </td>
-                    <td class="text-center"><strong>{$addon.pricingtext}</strong></td>
-                </tr>
-            {/foreach}
-
-            {foreach key=num item=domain from=$domains}
-                <tr class="carttableproduct">
-                    <td>
-                        <strong>{if $domain.type eq "register"}{$LANG.orderdomainregistration}{else}{$LANG.orderdomaintransfer}{/if}</strong> - {$domain.domain} - {$domain.regperiod} {$LANG.orderyears}<br />
-                        {if $domain.dnsmanagement}&nbsp;&raquo; {$LANG.domaindnsmanagement}<br />{/if}
-                        {if $domain.emailforwarding}&nbsp;&raquo; {$LANG.domainemailforwarding}<br />{/if}
-                        {if $domain.idprotection}&nbsp;&raquo; {$LANG.domainidprotection}<br />{/if}
-                        <a href="{$smarty.server.PHP_SELF}?a=confdomains" class="cartedit">[{$LANG.cartconfigdomainextras}]</a>
-                        <a href="#" onclick="removeItem('d','{$num}');return false" class="cartremove">[{$LANG.cartremove}]</a>
-                    </td>
-                    <td class="text-center">
-                        <strong>{$domain.price}</strong>
-                    </td>
-                </tr>
-            {/foreach}
-
-            {foreach key=num item=domain from=$renewals}
-                <tr class="carttableproduct">
-                    <td>
-                        <strong>{$LANG.domainrenewal}</strong> - {$domain.domain} - {$domain.regperiod} {$LANG.orderyears}<br />
-                        {if $domain.dnsmanagement}&nbsp;&raquo; {$LANG.domaindnsmanagement}<br />{/if}
-                        {if $domain.emailforwarding}&nbsp;&raquo; {$LANG.domainemailforwarding}<br />{/if}
-                        {if $domain.idprotection}&nbsp;&raquo; {$LANG.domainidprotection}<br />{/if}
-                        <a href="#" onclick="removeItem('r','{$num}');return false" class="cartremove">[{$LANG.cartremove}]</a>
-                    </td>
-                    <td class="text-center">
-                        <strong>{$domain.price}</strong>
-                    </td>
-                </tr>
-            {/foreach}
-
-            {if $cartitems == 0}
-                <tr class="clientareatableactive">
-                    <td colspan="2" class="text-center">
-                        <br />
-                        {$LANG.cartempty}
-                        <br /><br />
-                    </td>
-                </tr>
-            {/if}
-
-            <tr class="subtotal">
-                <td class="text-right">{$LANG.ordersubtotal}: &nbsp;</td>
-                <td class="text-center">{$subtotal}</td>
-            </tr>
-            {if $promotioncode}
-                <tr class="promotion">
-                    <td class="text-right">{$promotiondescription}: &nbsp;</td>
-                    <td class="text-center">{$discount}</td>
-                </tr>
-            {/if}
-            {if $taxrate}
-                <tr class="subtotal">
-                    <td class="text-right">{$taxname} @ {$taxrate}%: &nbsp;</td>
-                    <td class="text-center">{$taxtotal}</td>
-                </tr>
-            {/if}
-            {if $taxrate2}
-                <tr class="subtotal">
-                    <td class="text-right">{$taxname2} @ {$taxrate2}%: &nbsp;</td>
-                    <td class="text-center">{$taxtotal2}</td>
-                </tr>
-            {/if}
-            <tr class="total">
-                <td class="text-right">{$LANG.ordertotalduetoday}: &nbsp;</td>
-                <td class="text-center">{$total}</td>
-            </tr>
-            {if $totalrecurringmonthly || $totalrecurringquarterly || $totalrecurringsemiannually || $totalrecurringannually || $totalrecurringbiennially || $totalrecurringtriennially}
-                <tr class="recurring">
-                    <td class="text-right">{$LANG.ordertotalrecurring}: &nbsp;</td>
-                    <td class="text-center">
-                        {if $totalrecurringmonthly}{$totalrecurringmonthly} {$LANG.orderpaymenttermmonthly}<br />{/if}
-                        {if $totalrecurringquarterly}{$totalrecurringquarterly} {$LANG.orderpaymenttermquarterly}<br />{/if}
-                        {if $totalrecurringsemiannually}{$totalrecurringsemiannually} {$LANG.orderpaymenttermsemiannually}<br />{/if}
-                        {if $totalrecurringannually}{$totalrecurringannually} {$LANG.orderpaymenttermannually}<br />{/if}
-                        {if $totalrecurringbiennially}{$totalrecurringbiennially} {$LANG.orderpaymenttermbiennially}<br />{/if}
-                        {if $totalrecurringtriennially}{$totalrecurringtriennially} {$LANG.orderpaymenttermtriennially}<br />{/if}
-                    </td>
-                </tr>
-            {/if}
-        </table>
-
-    </form>
-
-    <div class="cartbuttons">
-        <button type="button" class="btn btn-danger btn-sm" onclick="emptyCart();return false"><i class="fa fa-trash"></i> {$LANG.emptycart}</button>
-        <a href="cart.php" class="btn btn-default btn-sm"><i class="fa fa-shopping-cart"></i> {$LANG.continueshopping}</a>
-    </div>
-
-    {foreach from=$gatewaysoutput item=gatewayoutput}
-        <div class="clear"></div>
-        <div class="cartbuttons">
-            {$gatewayoutput}
-        </div>
-    {/foreach}
 
     {if $cartitems!=0}
 
@@ -229,16 +92,24 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
             <input type="hidden" name="submit" value="true" />
             <input type="hidden" name="custtype" id="custtype" value="{$custtype}" />
 
-            <br /><br />
+            <!--<br /><br />-->
+<div id="container">
+    <div id="content">
+            <!--<div class="col-sm-6 ">-->
+                <h2>{$LANG.yourdetails}</h2>
 
-            <h2>{$LANG.yourdetails}</h2>
 
-            <div style="float:left;width:20px;">&nbsp;</div><div class="signuptype{if !$loggedin && $custtype neq "existing"} active{/if}"{if !$loggedin} id="newcust"{/if}>{$LANG.newcustomer}</div><div class="signuptype{if $custtype eq "existing" && !$loggedin || $loggedin} active{/if}" id="existingcust">{$LANG.existingcustomer}</div>
+            <div style="float:left;width:20px;margin-buttom:0px;">&nbsp;</div>
+                <div style="background-color:rgb(31,74,138);color:#FFFFFF;"  
+                    class="signuptype{if !$loggedin && $custtype neq 'existing'} active{/if}"{if !$loggedin} id="newcust"{/if}>{$LANG.newcustomer}
+                </div>
+                <div class="signuptype{if $custtype eq "existing" && !$loggedin || $loggedin} active{/if}" id="existingcust">{$LANG.existingcustomer}
+                </div>
+            <!--</div>-->
             <div class="clear"></div>
 
             <div class="signupfields signupfields-existing{if $custtype eq "existing" && !$loggedin}{else} hidden{/if}" id="loginfrm">
-
-                <div class="col-sm-6 col-sm-offset-3">
+                <!--<div class="col-sm-6 col-sm-offset-3">-->
 
                     <div class="form-group">
                         <label for="inputEmail">{$LANG.clientareaemail}</label>
@@ -249,14 +120,14 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                         <input type="password" name="loginpw" class="form-control" id="inputPassword" placeholder="{$LANG.clientareapassword}"{if $loggedin} disabled{/if} />
                     </div>
 
-                </div>
+                <!--</div>-->
 
                 <div class="clearfix"></div>
 
             </div>
             <div class="signupfields{if $custtype eq "existing" && !$loggedin} hidden{/if}" id="signupfrm">
                 <div class="row">
-                    <div class="col-md-6">
+                    <!--<div class="col-md-6">-->
                         <div class="form-group">
                             {if $loggedin}
                                 <div class="row">
@@ -287,7 +158,7 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                                 <input type="text" name="lastname" id="lastname" value="{$clientsdetails.lastname}" class="form-control"{if !in_array('lastname', $clientsProfileOptionalFields)} required{/if}  />
                             {/if}
                         </div>
-                        <div class="form-group">
+                        <!--<div class="form-group">
                             {if $loggedin}
                                 <div class="row">
                                     <label class="col-sm-4 text-right">
@@ -301,7 +172,7 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                                 <label for="companyname" class="control-label">{$LANG.clientareacompanyname}</label>
                                 <input type="text" name="companyname" id="companyname" value="{$clientsdetails.companyname}" class="form-control" />
                             {/if}
-                        </div>
+                        </div>-->
                         <div class="form-group">
                             {if $loggedin}
                                 <div class="row">
@@ -332,8 +203,8 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                                 </div>
                             </div>
                         {/if}
-                    </div>
-                    <div class="col-md-6">
+                    <!--</div>
+                    <div class="col-md-6">-->
                         <div class="form-group">
                             {if $loggedin}
                                 <div class="row">
@@ -453,7 +324,7 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                                 </div>
                             {/foreach}
                         {/if}
-                    </div>
+                    <!--</div>-->
                 </div>
             </div>
 
@@ -486,10 +357,13 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                     <input type="submit" value="{$LANG.carttaxupdateselectionsupdate}" name="updateonly" class="btn btn-info btn-sm" />
                 </div>
             {/if}
-
             {if $domainsinorder}
+<!-- end of left-->
+</div>
+<div id="sidebar">
                 <h2>{$LANG.domainregistrantinfo}</h2>
-                <select name="contact" id="inputDomainContact" class="form-control">
+
+                <select style="width:90%" name="contact" id="inputDomainContact" class="form-control">
                     <option value="">{$LANG.usedefaultcontact}</option>
                     {foreach from=$domaincontacts item=domcontact}
                         <option value="{$domcontact.id}"{if $contact==$domcontact.id} selected{/if}>{$domcontact.name}</option>
@@ -520,7 +394,7 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                                 <label for="domaincontactphonenumber" class="control-label">{$LANG.clientareaphonenumber}</label>
                                 <input type="text" name="domaincontactphonenumber" id="domaincontactphonenumber" value="{$domaincontact.phonenumber}" class="form-control" />
                             </div>
-                        </div>
+          checkout              </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="domaincontactaddress1" class="control-label">{$LANG.clientareaaddress1}</label>
@@ -555,8 +429,8 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                 </div>
             {/if}
 
-            <div class="row">
-                <div class="col-md-6">
+            <!--<div class="row">-->
+                <!--<div class="col-md-6">-->
 
                     <div class="signupfields padded">
                         <h2>{$LANG.orderpromotioncode}</h2>
@@ -585,8 +459,8 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                         </div>
                     {/if}
 
-                </div>
-                <div class="col-md-6">
+                <!--</div> 
+                <div class="col-md-6">-->
 
                     <div class="signupfields padded">
                         <h2>{$LANG.orderpaymentmethod}</h2>
@@ -700,11 +574,12 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
 
                     </div>
 
-                </div>
-            </div>
-            <div class="clearfix"></div>
-
-            {if $accepttos}
+                <!--</div>-->
+            <!--</div>-->
+            
+            
+            
+              {if $accepttos}
                 <div align="center">
                     <label class="checkbox-inline">
                         <input type="checkbox" name="accepttos" id="accepttos" />
@@ -717,10 +592,24 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
 
             <div align="center">
                 <button type="submit" id="btnCompleteOrder"{if $cartitems==0} disabled{/if} onclick="this.value='{$LANG.pleasewait}'" class="btn btn-primary btn-lg" {if $custtype eq "existing" && !$loggedin}formnovalidate{/if}>
-                    {$LANG.checkout}
+                    <!--{$LANG.checkout}-->Get Started
                     &nbsp;<i class="fa fa-arrow-circle-right"></i>
                 </button>
             </div>
+            
+            
+            
+            
+    <!--end of right -->
+    </div>
+
+<!-- end of container -->
+</div>
+
+
+            <div class="clearfix"></div>
+
+          
 
         </form>
 
@@ -729,6 +618,219 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
         <br /><br />
 
     {/if}
+
+<br/>
+    {if $errormessage}
+        <div class="errorbox" style="display:block;">
+            {$errormessage|replace:'<li>':' &nbsp;#&nbsp; '} &nbsp;#&nbsp;
+        </div>
+    {elseif $promotioncode && $rawdiscount eq "0.00"}
+        <div class="errorbox" style="display:block;">
+            {$LANG.promoappliedbutnodiscount}
+        </div>
+    {/if}
+
+    {if $bundlewarnings}
+        <div class="cartwarningbox">
+            <strong>{$LANG.bundlereqsnotmet}</strong><br />
+            {foreach from=$bundlewarnings item=warning}
+                {$warning}<br />
+            {/foreach}
+        </div>
+    {/if}
+
+    {if !$loggedin && $currencies}
+        <div class="currencychooser">
+            <div class="btn-group" role="group">
+                {foreach from=$currencies item=curr}
+                    <a href="cart.php?a=view&currency={$curr.id}" class="btn btn-default{if $currency.id eq $curr.id} active{/if}">
+                        <img src="{$BASE_PATH_IMG}/flags/{if $curr.code eq "AUD"}au{elseif $curr.code eq "CAD"}ca{elseif $curr.code eq "EUR"}eu{elseif $curr.code eq "GBP"}gb{elseif $curr.code eq "INR"}in{elseif $curr.code eq "JPY"}jp{elseif $curr.code eq "USD"}us{elseif $curr.code eq "ZAR"}za{else}na{/if}.png" border="0" alt="" />
+                        {$curr.code}
+                    </a>
+                {/foreach}
+            </div>
+        </div>
+    {/if}
+
+    <form method="post" action="{$smarty.server.PHP_SELF}?a=view">
+
+        <table class="cart" cellspacing="1">
+            <tr>
+                <th width="60%">{$LANG.orderdesc}</th>
+                <th width="40%">{$LANG.orderprice}</th>
+            </tr>
+
+            {foreach key=num item=product from=$products}
+                <tr class="carttableproduct">
+                    <td>
+                        <strong><em>{$product.productinfo.groupname}</em> - {$product.productinfo.name}</strong>{if $product.domain} ({$product.domain}){/if}<br />
+                        {if $product.configoptions}
+                            {foreach key=confnum item=configoption from=$product.configoptions}
+                                &nbsp;&raquo; {$configoption.name}: {if $configoption.type eq 1 || $configoption.type eq 2}{$configoption.option}{elseif $configoption.type eq 3}{if $configoption.qty}{$LANG.yes}{else}{$LANG.no}{/if}{elseif $configoption.type eq 4}{$configoption.qty} x {$configoption.option}{/if}<br />
+                            {/foreach}
+                        {/if}
+                        <!-- add billingcycle select here 
+                        <span id="">info: {$product.billingcycle}</span>-->
+                        <div><span id="billingcyclespan{$num}"></span><button class="btn btn-default btn-sm" onclick="recalctotalsAndReflesh({$num}); return false;">Update</button>
+                        <a href="#" onclick="removeItem('p','{$num}');return false" class="cartremove">[{$LANG.cartremove}]</a></div>
+                        <script>
+                        jQuery.post("cart.php", 'ajax=1&a=confproduct&i={$num}',
+                            function(data){
+                                var tdata = data.split("<!-- ajax -->");
+                                //console.log(tdata);
+                                jQuery("#billingcyclespan{$num}").html(tdata[1]);
+                            });
+                        </script>
+                        <!--<a href="{$smarty.server.PHP_SELF}?a=confproduct&i={$num}" class="cartedit">[{$LANG.carteditproductconfig}]</a>-->
+                        
+                        {if $product.allowqty}
+                        <br /><br />
+                        <div align="right">{$LANG.cartqtyenterquantity} <input type="text" name="qty[{$num}]" size="3" value="{$product.qty}" /> <input type="submit" value="{$LANG.cartqtyupdate}" class="btn btn-default btn-sm" /></div>
+                        {/if}
+                    </td>
+                    <td class="text-center">
+                        <strong>{$product.pricingtext}{if $product.proratadate}<br />({$LANG.orderprorata} {$product.proratadate}){/if}</strong>
+                    </td>
+                </tr>
+                {foreach key=addonnum item=addon from=$product.addons}
+                    <tr class="carttableproduct">
+                        <td><strong>{$LANG.orderaddon}</strong> - {$addon.name}</td>
+                        <td class="text-center"><strong>{$addon.pricingtext}</strong></td>
+                    </tr>
+                {/foreach}
+            {/foreach}
+
+            {foreach key=num item=addon from=$addons}
+                <tr class="carttableproduct">
+                    <td>
+                        <strong>{$addon.name}</strong><br />
+                        {$addon.productname}{if $addon.domainname} - {$addon.domainname}<br />{/if}
+                        <a href="#" onclick="removeItem('a','{$num}');return false" class="cartremove">[{$LANG.cartremove}]</a>
+                    </td>
+                    <td class="text-center"><strong>{$addon.pricingtext}</strong></td>
+                </tr>
+            {/foreach}
+
+            {foreach key=num item=domain from=$domains}
+                <tr class="carttableproduct">
+                    <td>
+                        <strong>{if $domain.type eq "register"}{$LANG.orderdomainregistration}{else}{$LANG.orderdomaintransfer}{/if}</strong> - {$domain.domain} - {$domain.regperiod} {$LANG.orderyears}<br />
+                        {if $domain.dnsmanagement}&nbsp;&raquo; {$LANG.domaindnsmanagement}<br />{/if}
+                        {if $domain.emailforwarding}&nbsp;&raquo; {$LANG.domainemailforwarding}<br />{/if}
+                        {if $domain.idprotection}&nbsp;&raquo; {$LANG.domainidprotection}<br />{/if}
+                        <a href="{$smarty.server.PHP_SELF}?a=confdomains" class="cartedit">[{$LANG.cartconfigdomainextras}]</a>
+                        <a href="#" onclick="removeItem('d','{$num}');return false" class="cartremove">[{$LANG.cartremove}]</a>
+                    </td>
+                    <td class="text-center">
+                        <strong>{$domain.price}</strong>
+                    </td>
+                </tr>
+            {/foreach}
+
+            {foreach key=num item=domain from=$renewals}
+                <tr class="carttableproduct">
+                    <td>
+                        <strong>{$LANG.domainrenewal}</strong> - {$domain.domain} - {$domain.regperiod} {$LANG.orderyears}<br />
+                        {if $domain.dnsmanagement}&nbsp;&raquo; {$LANG.domaindnsmanagement}<br />{/if}
+                        {if $domain.emailforwarding}&nbsp;&raquo; {$LANG.domainemailforwarding}<br />{/if}
+                        {if $domain.idprotection}&nbsp;&raquo; {$LANG.domainidprotection}<br />{/if}
+                        <a href="#" onclick="removeItem('r','{$num}');return false" class="cartremove">[{$LANG.cartremove}]</a>
+                    </td>
+                    <td class="text-center">
+                        <strong>{$domain.price}</strong>
+                    </td>
+                </tr>
+            {/foreach}
+
+            {if $cartitems == 0}
+                <tr class="clientareatableactive">
+                    <td colspan="2" class="text-center">
+                        <br />
+                        {$LANG.cartempty}
+                        <br /><br />
+                    </td>
+                </tr>
+            {/if}
+
+            <tr class="subtotal">
+                <td class="text-right">{$LANG.ordersubtotal}: &nbsp;</td>
+                <td class="text-center">{$subtotal}</td>
+            </tr>
+            {if $promotioncode}
+                <tr class="promotion">
+                    <td class="text-right">{$promotiondescription}: &nbsp;</td>
+                    <td class="text-center">{$discount}</td>
+                </tr>
+            {/if}
+            {if $taxrate}
+                <tr class="subtotal">
+                    <td class="text-right">{$taxname} @ {$taxrate}%: &nbsp;</td>
+                    <td class="text-center">{$taxtotal}</td>
+                </tr>
+            {/if}
+            {if $taxrate2}
+                <tr class="subtotal">
+                    <td class="text-right">{$taxname2} @ {$taxrate2}%: &nbsp;</td>
+                    <td class="text-center">{$taxtotal2}</td>
+                </tr>
+            {/if}
+            <tr class="total">
+                <td class="text-right">{$LANG.ordertotalduetoday}: &nbsp;</td>
+                <td class="text-center">{$total}</td>
+            </tr>
+            {if $totalrecurringmonthly || $totalrecurringquarterly || $totalrecurringsemiannually || $totalrecurringannually || $totalrecurringbiennially || $totalrecurringtriennially}
+                <tr class="recurring">
+                    <td class="text-right">{$LANG.ordertotalrecurring}: &nbsp;</td>
+                    <td class="text-center">
+                        {if $totalrecurringmonthly}{$totalrecurringmonthly} {$LANG.orderpaymenttermmonthly}<br />{/if}
+                        {if $totalrecurringquarterly}{$totalrecurringquarterly} {$LANG.orderpaymenttermquarterly}<br />{/if}
+                        {if $totalrecurringsemiannually}{$totalrecurringsemiannually} {$LANG.orderpaymenttermsemiannually}<br />{/if}
+                        {if $totalrecurringannually}{$totalrecurringannually} {$LANG.orderpaymenttermannually}<br />{/if}
+                        {if $totalrecurringbiennially}{$totalrecurringbiennially} {$LANG.orderpaymenttermbiennially}<br />{/if}
+                        {if $totalrecurringtriennially}{$totalrecurringtriennially} {$LANG.orderpaymenttermtriennially}<br />{/if}
+                    </td>
+                </tr>
+            {/if}
+        </table>
+
+    </form>
+
+    <div class="cartbuttons">
+        <!--<button type="button" class="btn btn-danger btn-sm" onclick="emptyCart();return false"><i class="fa fa-trash"></i> {$LANG.emptycart}</button>-->
+        <!--<a href="cart.php" class="btn btn-default btn-sm"><i class="fa fa-shopping-cart"></i> {$LANG.continueshopping}</a>-->
+    </div>
+    <!-- agree and checkout -->
+    <!--{if $accepttos}
+                <div align="center">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="accepttos" id="accepttos" />
+                        {$LANG.ordertosagreement}
+                        <a href="{$tosurl}" target="_blank">{$LANG.ordertos}</a>
+                    </label>
+                </div>
+                <br />
+    {/if}-->
+    <!--
+    <div align="right">
+        <script>
+            function submitMainForm(){
+                document.forms[0].submit();
+                alert("s");
+            }
+        </script>
+        <button type="submit" id="btnCompleteOrder"{if $cartitems==0} disabled{/if} onclick="this.value='{$LANG.pleasewait}'; submitMainForm();" class="btn btn-primary btn-lg" {if $custtype eq "existing" && !$loggedin}formnovalidate{/if}>
+            <!--{$LANG.checkout}Get Started
+            &nbsp;<i class="fa fa-arrow-circle-right"></i>
+        </button>
+    </div>-->
+    {foreach from=$gatewaysoutput item=gatewayoutput}
+        <div class="clear"></div>
+        <div class="cartbuttons">
+            {$gatewayoutput}
+        </div>
+    {/foreach}
+
+
 
     <div class="cartwarningbox">
         <img src="assets/img/padlock.gif" align="absmiddle" border="0" alt="Secure Transaction" />
