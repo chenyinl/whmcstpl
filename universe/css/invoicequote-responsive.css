@@ -1,0 +1,29 @@
+@media (max-width: 770px) {
+
+.container-error,
+.container { width: 90%; }
+
+} /* /end 770px */
+
+@media (max-width: 610px) {
+
+.container .header .left { margin: 0 auto 20px auto; width: 100%; text-align: center; }
+.container .header .right { clear: both; margin: 0 auto; width: 100%; }
+.container .header .payment { width: 80%; margin: 0 auto; }
+
+} /* /end 610px */
+
+@media (max-width: 500px) {
+
+.container { width: 100%; border: none; margin-top: 0; }
+
+} /* /end 500px */
+
+@media (max-width: 450px) {
+
+.container .inner { padding: 5%; }
+.container .header { margin: 0 0 4px 0; }
+
+.container .addresses .address { clear: both; margin-right: 0; width: 96%; } 
+
+} /* /end 500px */

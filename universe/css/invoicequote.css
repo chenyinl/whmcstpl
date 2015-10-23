@@ -1,0 +1,531 @@
+/* ------------ 
+--- Quick edit - We've seperated the lines that control the most important colors so you can quickly tweak them to match your website.
+------------  */
+
+/* Background */
+
+body {
+	background: #fff; /* The background of the page - you can easily replicate the background of your website here */
+}	
+
+/* Main container */
+
+.container { 
+	background: #fff; /* The background color of the main container */
+	border: #dcdcdc 1px solid; /* The border around the main container */
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;		
+}
+
+.container .header { 
+	background: #dce9ff; /* The colors used for the header background (section behind the logo and payment box) */
+	border-bottom: #dcdcdc 1px solid;	
+}
+
+/* Highlight boxes */
+
+.greybox { /* Controls the grey box colors/border (used for invoice notes) */
+	background: #fff;
+	border: #dcdcdc 1px solid;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;	
+}
+.redbox { /* Controls the red box colors/border (used for credit box) */
+	border: 1px solid #cc0000;
+    background: #FBEEEB; 
+}
+
+/* Colors - mainly used for buttons. The color bold should be more bold than colorlight as it's used for main focus points such as make payment buttons */
+
+.container .header .paymentinvoice input[type="submit"],
+.colorbold {
+	color: #fff;
+	background: #d07f02;
+	border: none;
+}
+
+.container .header .paymentinvoice input[type="submit"],
+.colorbold:hover {
+	color: #000;
+	background: #d07f02;
+	border: none;
+}
+
+.container .header .paymentinvoice input[type="submit"],
+.colorbold:active {
+	color: #fff;
+	background: #d07f02;
+	border: none;
+}
+
+.colorlight {
+	background: #4dbcfc;
+	border: solid 1px #2b678a;
+	color:#fff !important;
+	background: -webkit-gradient(linear, left top, left bottom, from(#4dbcfc), to(#3483b0));
+	background: -moz-linear-gradient(top,  #4dbcfc,  #3483b0);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4dbcfc', endColorstr='#3483b0');
+}
+
+.colorlight:hover {
+	color: #fff;
+	border: solid 1px #3b85b0;
+	background: #65c7ff;
+	background: -webkit-gradient(linear, left top, left bottom, from(#65c7ff), to(#3b91c2));
+	background: -moz-linear-gradient(top,  #65c7ff,  #3b91c2);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#65c7ff', endColorstr='#3b91c2');
+}
+
+.colorlight:active {
+	background: #4dbcfc;
+	color:#fff;
+	background: -webkit-gradient(linear, left top, left bottom, from(#4dbcfc), to(#3483b0));
+	background: -moz-linear-gradient(top,  #4dbcfc,  #3483b0);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4dbcfc', endColorstr='#3483b0');
+}
+
+/* Notices - Styles the notices such as error messages */
+
+.notice-info { 
+	background: #d9f2fe url(../images/info.png) 20px center no-repeat;
+	outline: #98d8f8 1px solid;
+	color: #00529B;
+}
+
+.notice-success { 
+	background: #dff2bf url(../images/success.png) 20px center no-repeat;
+	outline: #4f8a10 1px solid;
+	color: #4F8A10;
+}
+
+.notice-error { 
+	background: #ffbaba url(../images/error.png) 20px center no-repeat;
+	outline: #d8000c 1px solid;
+	color: #D8000C;
+}
+
+/* Footer links */
+
+.links,
+.links a {
+	color: #fff;
+}
+
+
+
+
+
+
+
+
+
+/* ------------ 
+--- Layout - NO NEED TO EDIT BEYOND THIS POINT UNLESS TWEAKING THE DESIGN/SPECIFIC COLORS/SPACING
+------------  */
+
+/* Reset */
+
+* {
+    list-style: none;
+    margin: 0;
+    outline: none;
+    padding: 0;
+}
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+}
+
+table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+/* Defaults */
+
+body {
+    line-height: 1;
+}
+
+img {
+	border: none;
+	vertical-align: top;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section, summary { 
+    display: block;
+}
+
+audio,
+canvas,
+video {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+
+audio:not([controls]) {
+  display: none;
+}
+
+ul {
+	padding-left: 0;
+}
+
+table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+    border-collapse: collapse;
+}
+
+input,
+textarea {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+body {
+    color: #777;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 62.5%; /* Sets default font-size to 10px - 1em = 10px */
+    line-height: 15px; 
+}
+
+/* Classes */
+
+strong { color: #000; }
+.clear { clear: both; height: 0; line-height: 0; }
+.inputstyle { background: #fff; border: #bababa 1px solid; padding: 7px; }
+.last { margin-right: 0 !important }
+.center { text-align: center; }
+.margintop10 { margin-top: 10px !important; }
+.spacingbottom { margin-bottom: 20px; }
+
+/* Layout */
+
+.container-error {
+	width: 70%; margin: 20px auto 0 auto; max-width: 800px;
+}
+.container { 
+	width: 70%;
+	margin: 20px auto 0 auto;
+	max-width: 800px;
+	font-size: 1.2em;
+}
+.container .inner {
+	padding: 2%;
+}
+.container .header { 
+	padding: 20px 0 20px 0;
+
+}
+.container .header .left {
+	float: left;
+	margin: 0 0 0 5%;
+	width: 45%;
+}
+.container .header .left .company {
+	margin: 0 0 20px 0;
+}
+.container .header .right {
+	float: left;
+	margin: 0 5% 0 0;
+	width: 45%;
+}
+.container .header .payment {
+	background: #fff;
+	padding: 2%;
+	border: #cccccc 1px solid;
+	width: 96%;
+	text-align: center;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+.container .header .payment .makepayment {
+	text-align: center;
+	font-size: 1.1em;
+	margin: 0 0 10px 0;
+	font-weight: bold;
+	color: #000;
+}
+.container .header .payment select {
+	background: #fff;
+	border: #bababa 1px solid;
+	padding: 4px;
+	width: 50%;
+	margin: 0 0 10px 0;
+}
+.container .header .paymentbutton {
+	line-height: 15px;
+}
+.container .header .paymentproblem {
+	margin: 10px 0 0 0;
+	font-size: 0.8em;
+}
+.container .header .paymentproblem a { 
+	color: #777;
+}
+.container .addresses .address {
+	width: 45%;
+	margin: 0 2% 20px 0;
+	padding: 2%;
+	float: left;
+	background: #fff;
+	outline: #cccccc 1px solid;
+}
+.container .addresses .address h2 {
+	font-size: 1.5em;
+	margin-bottom: 10px;
+}
+
+/* Highlightbox */
+
+.highlightbox {
+	padding: 2%; 
+}
+.highlightbox p {
+	margin: 0 0 10px 0;
+}
+.highlightbox p:last-child {
+	margin-bottom: 0;
+}
+.redbox { /* Red style */
+    margin-bottom: 20px; 
+}
+.redbox p {
+	text-align: center;
+}
+
+/* Status */
+
+.status {
+    font-weight: bold;
+    font-size: 1.7em;
+    text-align: center;
+    margin-bottom: 15px;
+    line-height: 1;
+}
+
+.status span {
+	font-weight: normal;
+	font-size: 13px !important;
+}
+
+.unpaid {
+    color: #cc0000;
+}
+
+.paid {
+    color: #779500;
+}
+
+.refunded {
+    color: #224488;
+}
+
+.cancelled {
+    color: #cccccc;
+}
+
+.collections {
+    color: #ffcc00;
+}
+
+.totaldue {
+	color: red !important;
+	font-size: 1.3em;
+}
+
+.totalpaid {
+	color: green !important;
+	font-size: 1.3em;
+}
+
+.totaldue1 {
+	color: red !important;
+}
+
+/* Tables */
+
+.table-responsive {
+	width: 100%;
+	overflow-y: auto;
+	_overflow: auto;
+	margin: 0 0 20px 0;
+}
+
+.table-responsive table {
+	width: 100%;
+}
+
+.table-responsive th {
+	padding: 10px 20px;
+	text-align: left;
+}
+
+.table-responsive th a {
+	font-weight: bold;
+}
+
+.table-responsive tr {
+	width: 100%;
+}
+
+.table-responsive td {
+	padding: 5px 20px; 
+}
+
+.table-responsive td a {
+	font-weight: bold;
+}
+
+.table-responsive td a.button1 {
+	color: #fff;
+}
+
+.table-responsive::-webkit-scrollbar { /* IOS scrollbar */
+	-webkit-appearance: none;
+	width: 14px;
+	height: 14px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+	border-radius: 8px;
+	border: 3px solid #fff;
+	background-color: rgba(0, 0, 0, .3);
+}
+
+.table-responsive input[type="text"],
+.table-responsive input[type="password"],
+.table-responsive input[type="email"],
+.table-responsive select {
+	box-shadow:inset 0 1px 2px #DDD, 0 1px 0 #FFF;
+	-webkit-box-shadow:inset 0 1px 2px #DDD, 0 1px 0 #FFF;
+	-moz-box-shadow:inset 0 1px 2px #DDD, 0 1px 0 #FFF;
+	border:1px solid #CCC;
+	background:#FFF;
+	margin:0 0 5px;
+	padding: 10px 2%;
+	border-radius:5px;
+	-moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+    width: 96%;
+}    
+#invoicetoptables {
+    width: 100%;
+    background-color: #cccccc;
+    border-collapse: seperate;
+}
+
+td#invoicecontent {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+#invoiceitemstable {
+    width: 100%;
+    background-color: #cccccc;
+    border-collapse: seperate;
+}
+
+td#invoiceitemsheading {
+    background-color: #efefef;
+    color: #000000;
+    font-weight: bold;
+    text-align: center;
+}
+
+td#invoiceitemsrow {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Buttons */
+
+.button1 {
+	display: inline-block;
+	zoom: 1;
+	*display: inline;
+	vertical-align: baseline;
+	margin: 0 2px;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	border-radius: 5px;	
+		-webkit-border-radius: 5px; 
+		-moz-border-radius: 5px;
+    font-size: 1.2em;
+    padding: 10px 30px !important;
+    border: none;
+}
+
+.button1:hover {
+	text-decoration: none;
+}
+
+.container .header .paymentinvoice input[type="submit"] {
+	padding: 5px;
+	cursor: pointer;
+}
+
+/* Footer links */
+
+.links {
+	font-size: 1.2em;
+	height: 50px;
+	line-height: 50px;
+}
+
+/* Accept quote */
+
+#quoteaccept p {
+	margin-bottom: 20px;
+}
+
+#quoteaccept p:last-child {
+	margin-bottom: 0;
+}
+
+/* Notices */
+
+.notice {
+	width: 100%;
+	padding: 10px 0;
+	margin: 0 0 20px 0;
+}
+
+.notice .inside {
+	margin: 0;
+	padding: 0 20px 0 68px;
+}
+
+.notice p {
+	margin: 0;
+	padding: 0;
+}
+
+/* Images */
+
+.img-respond {
+    width: 100%;
+}
+.img-logo {
+    max-width: 277px;
+}

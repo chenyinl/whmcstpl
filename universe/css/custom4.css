@@ -1,0 +1,126 @@
+/*
+
+	This file is loaded on the custom4 page (dedicated-servers.php by default unless changed in Wizard Panel). This allows you to define custom styles that are applied to this page only. By default we've used it to force this page to use full width in the content area and also apply a "Popular" ribbon to one plan (can be changed by edited the box number). You could use this file to add new elements specific to this page, change colors/spacing as needed etc. There's no limits to what can be done, enjoy!
+
+*/
+
+/* -----------------
+
+	 Plan highlight - these styles apply the unique background color and ribbon graphic to the plan you set as the most popular (this is set in the custom files at /includes/)
+
+----------------- */
+
+/* Pricing tables */
+
+.pricingtable .highlight .popular {
+	width: 72px;
+	height: 71px;
+	position: absolute;
+	top: -4px;
+}
+
+.hook-english .pricingtable .highlight .popular,
+.hook-french .pricingtable .highlight .popular,
+.hook-german .pricingtable .highlight .popular,
+.hook-catalan .pricingtable .highlight .popular,
+.hook-croatian .pricingtable .highlight .popular,
+.hook-farsi .pricingtable .highlight .popular,
+.hook-portuguese-br .pricingtable .highlight .popular,
+.hook-portuguese-pt .pricingtable .highlight .popular,
+.hook-czech .pricingtable .highlight .popular,
+.hook-danish .pricingtable .highlight .popular,
+.hook-dutch .pricingtable .highlight .popular,
+.hook-hungarian .pricingtable .highlight .popular,
+.hook-italian .pricingtable .highlight .popular,
+.hook-norwegian .pricingtable .highlight .popular,
+.hook-russian .pricingtable .highlight .popular,
+.hook-spanish .pricingtable .highlight .popular,
+.hook-swedish .pricingtable .highlight .popular,
+.hook-turkish .pricingtable .highlight .popular,
+.hook-ukranian .pricingtable .highlight .popular {
+	right: -3px;
+}
+
+.hook-arabic .pricingtable .highlight .popular {
+	left: -3px;
+}
+
+.pricingtable .highlight .featureslist,
+.pricingtable .highlight .button {
+	background: #e9e9e9;
+}
+
+.pricingtable .highlight .featureslist ul li {
+	border-bottom: #fff 1px solid;
+	color: #000;
+}
+
+/* Plan boxes */
+
+.featureboxes .highlight .popular {
+	width: 72px;
+	height: 71px;
+	position: absolute;
+	top: -4px;
+}
+
+.hook-english .featureboxes .highlight .popular,
+.hook-french .featureboxes .highlight .popular,
+.hook-german .featureboxes .highlight .popular,
+.hook-catalan .featureboxes .highlight .popular,
+.hook-croatian .featureboxes .highlight .popular,
+.hook-farsi .featureboxes .highlight .popular,
+.hook-portuguese-br .featureboxes .highlight .popular,
+.hook-portuguese-pt .featureboxes .highlight .popular,
+.hook-czech .featureboxes .highlight .popular,
+.hook-danish .featureboxes .highlight .popular,
+.hook-dutch .featureboxes .highlight .popular,
+.hook-hungarian .featureboxes .highlight .popular,
+.hook-italian .featureboxes .highlight .popular,
+.hook-norwegian .featureboxes .highlight .popular,
+.hook-russian .featureboxes .highlight .popular,
+.hook-spanish .featureboxes .highlight .popular,
+.hook-swedish .featureboxes .highlight .popular,
+.hook-turkish .featureboxes .highlight .popular,
+.hook-ukranian .featureboxes .highlight .popular {
+	right: -4px; 
+}
+
+.hook-arabic .featureboxes .highlight .popular {
+	left: -4px;
+}
+
+.featureboxes .highlight {
+	background: #e9e9e9;
+}
+
+.featureboxes .highlight p {
+	color: #000;
+}
+
+.featureboxes .highlight ul li{
+	color: #000;
+	border-bottom: #fff 1px solid;
+}
+
+.featureboxes .highlight .server1,
+.featureboxes .highlight .server2,
+.featureboxes .highlight .server3 {
+	background: none !important;
+}
+
+.featureboxes:hover {
+	cursor: pointer;
+}
+
+/* Fix horizontal scroll bar bug due to 100% width elements used on this page in conjunction with Bootstrap CSS framework which uses - value margins and padding */
+
+.whmcscontainer .row {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.whmcscontainer .col-xs-12 {
+	padding-left: 0;
+	padding-right: 0;
+}

@@ -1,0 +1,73 @@
+/* This file is loaded for the login page and we've used it to create a slimmed down and clutter free login area */
+
+header,
+nav,
+.subbanner,
+footer .footerinner,
+footer .bar,
+.headerbg {
+	display: none;
+}
+
+article .article-inner {
+	min-height: 700px;
+}
+
+/* Client login box */
+
+.client-login {
+	width: 50%;
+	margin: 0 auto 25px auto;
+	background: #f8f8f8;	
+	border: #dcdcdc 1px solid;
+    -webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px; 	
+}
+
+.client-login .title {
+	color: #fff;
+	text-shadow: #000 1px 1px;
+	background: #1f4a8a;
+	font-weight: bold;
+	font-size: 1.4em;
+	line-height: 1;
+	padding: 13px 5px;
+	text-align: center;
+	border-bottom: #000 1px solid;
+    -webkit-border-radius: 5px 5px 0 0;
+	-moz-border-radius: 5px 5px 0 0;
+	border-radius: 5px 5px 0 0;	
+}
+
+.client-login .feilds {
+	padding: 8%;
+}
+
+.client-login .feildset {
+	background: none;
+	outline: none;
+	margin-bottom: 0;
+}
+
+.client-login .rememberme {
+	margin: 12px 0 15px 0;
+}
+
+.client-login .help {
+	padding: 2%;
+	background: #dce9ff;
+	border-top: #dcdcdc 1px solid;
+}
+
+.client-login .help p {
+	margin: 0 0 10px 0;
+}
+
+.client-login .help p:last-child {
+	margin: 0;
+}
+
+.client-login .help a {
+	color: #1a417b;
+}

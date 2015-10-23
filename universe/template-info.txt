@@ -1,0 +1,23 @@
+Version: 1.1
+
+----- Changelog -----
+
+V1.1
+
+- Re-integrated the template with the new WHMCS V6 Bootstrap responsive template named "Six". This is a significant upgrade and brings a lot of new features.
+
+- Integrated new notification system to the toolbar section when logged-in using a modern popup design
+
+- Removed the Gravatar feature as it assumed users had registered with Gravatar before a custom profile picture was shown. We found that very few people use the service, removing it also allows the template to be installed and used without the PHP tags option being enabled in general settings > security.
+
+- fixed Twitter URL bug on company.php page sidebar
+
+- removed the old hard-coded year in replacement of the new year variable in WHMCS V6
+
+- removed {literal} tags from inline CSS and Javascript as it's no longer required in WHMCS V6
+
+- added "My Portal" link to the top of the logged-in dropdown which is a link to the client area homepage
+
+V1.0
+
+Template launch

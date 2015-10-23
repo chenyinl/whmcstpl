@@ -1,0 +1,7 @@
+# Universe
+
+name: "Universe"
+description: "Premium and responsive WHMCS template."
+author: "Template Genie"
+properties:
+  serverSidePagination: false # Defines client side will handle pagination

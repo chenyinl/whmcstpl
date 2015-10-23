@@ -1,0 +1,9 @@
+/* menu */
+body { behavior: url("csshover3.htc"); }
+nav li.nodrop:hover { padding: 0px; }
+nav li:hover .menuright { right:1px; }
+nav li:hover .menuleft { left:0px; }
+nav li:hover .subcontainer { *top:25px; }
+nav li .subcontainer { *top:25px; }
+nav li div a { *display:inline; }
+* html .sublinks li a { width: 215px; margin: 5px 0; }
