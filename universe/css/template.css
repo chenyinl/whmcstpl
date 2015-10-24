@@ -22,7 +22,7 @@ html {
     list-style: none;
     margin: 0;
     outline: none;
-    padding: 2px;
+    padding:  2px; /*6px;*/
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	  box-sizing: border-box;
@@ -973,7 +973,7 @@ ul.navsub li a:hover, ul.navsub li a:active { color: #000; }
 /* Content */
 
 article {
-    margin: 15px auto;
+    /* margin: 15px auto;*/
 	/*line-height: 1.6em;*/
 	font-size: 14px;    /*font-size: 1.5em;*/  
     color: #555;
@@ -981,7 +981,7 @@ article {
 }
 
 article p {
-	margin: 0 0 20px 0;
+	margin: 0 0 5px 0; /*0 0 20px 0;*/
 }
 
 article h1, 
@@ -990,7 +990,7 @@ article h3,
 article h4, 
 article h5, 
 article h6 {
-	margin: 0 0 15px 0;
+	margin: 0 0 0px 0;/*0 0 15px 0;*/
 	text-align: center;
 }
 

@@ -1508,7 +1508,7 @@ box-shadow: inset 0px 0px 1px 0px rgba(0,0,0,0.2);
 
     border-radius: 5px;
 	
-	padding: 25px 15px !important;
+	padding: 5px 15px !important;/*25px 15px !important;*/
 }
 
 #order-modern .signuptype {
@@ -1579,7 +1579,7 @@ border-radius: 5px 5px 0px 0px;
 
     padding: 1px;
 
-    margin: 0 0 20px 0;
+    margin: 0 0 5px 0; /*0 0 20px 0;*/
 
     -moz-border-radius: 5px;
 

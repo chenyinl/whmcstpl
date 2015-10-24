@@ -1,16 +1,13 @@
 <style type="text/css">
 <!--
 	.steps li.step3 {  	
-		background: #d07f02 url("templates/{$template}/images/menuhover.png") top left repeat-x !important;
+		background: #0f9d58 url("templates/{$template}/images/menuhover.png") top left repeat-x !important;
 		color: #fff;
 }
 -->
-
-
-
-/* added by Chen */
+ /* added by Chen */
 #container {
-    width:1000px;
+    width:960px;
     margin: auto;
     align:center;
     /*width: 90%;*/
@@ -23,14 +20,14 @@
 
 #sidebar {
     float:left;
-    padding: 0 0 0 20px;
-    /*width:475px;*/
+    width:475px;
 }
 
 #footer {
     clear:both;
 }
-
+#desc-price{
+}
 input.form-control{
     height: 24px;
 }
@@ -42,26 +39,8 @@ input.form-control{
     right: 0px;
     
 }
-
-
-
-#signupfrm{
-    width: 475px !important;
-}
-#order-modern table.cart {
-
-    width: 475px !important;
-}
-
-#paymentrow{
-    width: 475px !important;
-
-}
-.input-group-btn {
-    display: inline !important;
-}
 </style>
-
+<!-- step color was #d07f02-->
 <link rel="stylesheet" type="text/css" href="templates/orderforms/{$carttpl}/style.css" />
 <script language="javascript">
     // Define state tab index value
@@ -89,6 +68,20 @@ function emptyCart(type,num) {
         window.location = 'cart.php?a=empty';
     }
 }
+function recalctotalsAndReflesh( i ) {
+    //console.log( "billingcycle"+i);
+    var billingcycle=document.getElementById("billingcycle"+i).value;
+    //console.log( billingcycle );
+    jQuery.post(
+        "cart.php", 
+        'ajax=1&a=confproduct&configure=true&billingcycle='+billingcycle+'&i='+i,
+        function(data){
+            //console.log("return data: ");
+            window.location.reload(false);
+        }
+    );
+    return false;
+}
 </script>{/literal}
 <script>
 window.langPasswordStrength = "{$LANG.pwstrength}";
@@ -96,54 +89,27 @@ window.langPasswordWeak = "{$LANG.pwstrengthweak}";
 window.langPasswordModerate = "{$LANG.pwstrengthmoderate}";
 window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
 </script>
-
 <div id="order-modern">
 
     <div class="text-center">
         <h1>{$LANG.cartreviewcheckout}</h1>
     </div>
 
-    {if $errormessage}
-        <div class="errorbox" style="display:block;">
-            {$errormessage|replace:'<li>':' &nbsp;#&nbsp; '} &nbsp;#&nbsp;
-        </div>
-    {elseif $promotioncode && $rawdiscount eq "0.00"}
-        <div class="errorbox" style="display:block;">
-            {$LANG.promoappliedbutnodiscount}
-        </div>
-    {/if}
-    
-    
+
+    {if $cartitems!=0}
+
+        <form method="post" action="{$smarty.server.PHP_SELF}?a=checkout" id="mainfrm">
+            <input type="hidden" name="submit" value="true" />
+            <input type="hidden" name="custtype" id="custtype" value="{$custtype}" />
+
+            <!--<br /><br />-->
 <div id="container">
-<div id="content">
     
     
-    
-    {if $bundlewarnings}
-        <div class="cartwarningbox">
-            <strong>{$LANG.bundlereqsnotmet}</strong><br />
-            {foreach from=$bundlewarnings item=warning}
-                {$warning}<br />
-            {/foreach}
-        </div>
-    {/if}
-
-    {if !$loggedin && $currencies}
-        <div class="currencychooser">
-            <div class="btn-group" role="group">
-                {foreach from=$currencies item=curr}
-                    <a href="cart.php?a=view&currency={$curr.id}" class="btn btn-default{if $currency.id eq $curr.id} active{/if}">
-                        <img src="{$BASE_PATH_IMG}/flags/{if $curr.code eq "AUD"}au{elseif $curr.code eq "CAD"}ca{elseif $curr.code eq "EUR"}eu{elseif $curr.code eq "GBP"}gb{elseif $curr.code eq "INR"}in{elseif $curr.code eq "JPY"}jp{elseif $curr.code eq "USD"}us{elseif $curr.code eq "ZAR"}za{else}na{/if}.png" border="0" alt="" />
-                        {$curr.code}
-                    </a>
-                {/foreach}
-            </div>
-        </div>
-    {/if}
-
+  <div id="desc-price">
     <form method="post" action="{$smarty.server.PHP_SELF}?a=view">
 
-        <table class="cart" cellspacing="1" id="carttable">
+        <table class="cart" cellspacing="1">
             <tr>
                 <th width="60%">{$LANG.orderdesc}</th>
                 <th width="40%">{$LANG.orderprice}</th>
@@ -158,8 +124,20 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                                 &nbsp;&raquo; {$configoption.name}: {if $configoption.type eq 1 || $configoption.type eq 2}{$configoption.option}{elseif $configoption.type eq 3}{if $configoption.qty}{$LANG.yes}{else}{$LANG.no}{/if}{elseif $configoption.type eq 4}{$configoption.qty} x {$configoption.option}{/if}<br />
                             {/foreach}
                         {/if}
-                        <a href="{$smarty.server.PHP_SELF}?a=confproduct&i={$num}" class="cartedit">[{$LANG.carteditproductconfig}]</a>
-                        <a href="#" onclick="removeItem('p','{$num}');return false" class="cartremove">[{$LANG.cartremove}]</a>
+                        <!-- add billingcycle select here 
+                        <span id="">info: {$product.billingcycle}</span>-->
+                        <div><span id="billingcyclespan{$num}"></span><button class="btn btn-default btn-sm" onclick="recalctotalsAndReflesh({$num}); return false;">Update</button>
+                        <a href="#" onclick="removeItem('p','{$num}');return false" class="cartremove">[{$LANG.cartremove}]</a></div>
+                        <script>
+                        jQuery.post("cart.php", 'ajax=1&a=confproduct&i={$num}',
+                            function(data){
+                                var tdata = data.split("<!-- ajax -->");
+                                //console.log(tdTotal Due Today:  ata);
+                                jQuery("#billingcyclespan{$num}").html(tdata[1]);
+                            });
+                        </script>
+                        <!--<a href="{$smarty.server.PHP_SELF}?a=confproduct&i={$num}" class="cartedit">[{$LANG.carteditproductconfig}]</a>-->
+                        
                         {if $product.allowqty}
                         <br /><br />
                         <div align="right">{$LANG.cartqtyenterquantity} <input type="text" name="qty[{$num}]" size="3" value="{$product.qty}" /> <input type="submit" value="{$LANG.cartqtyupdate}" class="btn btn-default btn-sm" /></div>
@@ -255,7 +233,7 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                 <td class="text-right">{$LANG.ordertotalduetoday}: &nbsp;</td>
                 <td class="text-center">{$total}</td>
             </tr>
-            {if $totalrecurringmonthly || $totalrecurringquarterly || $totalrecurringsemiannually || $totalrecurringannually || $totalrecurringbiennially || $totalrecurringtriennially}
+            {if $totalrecurringmonthly || $totalrecurringquarterly || $totalrecurringsemiannually || $totalrecurringannually || $totalrecurringbiennially || $totalrecurringtriennially}position:absolute;
                 <tr class="recurring">
                     <td class="text-right">{$LANG.ordertotalrecurring}: &nbsp;</td>
                     <td class="text-center">
@@ -271,35 +249,28 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
         </table>
 
     </form>
+</div><!--end of dev desc-price-->  
+    
+    
+    
+    
+    
+    <div id="content">
+            <!--<div class="col-sm-6 ">-->
+                <h2>{$LANG.yourdetails}</h2>
 
-    <div class="cartbuttons">
-        <button type="button" class="btn btn-danger btn-sm" onclick="emptyCart();return false"><i class="fa fa-trash"></i> {$LANG.emptycart}</button>
-        <a href="cart.php" class="btn btn-default btn-sm"><i class="fa fa-shopping-cart"></i> {$LANG.continueshopping}</a>
-    </div>
 
-    {foreach from=$gatewaysoutput item=gatewayoutput}
-        <div class="clear"></div>
-        <div class="cartbuttons">
-            {$gatewayoutput}
-        </div>
-    {/foreach}
-
-    {if $cartitems!=0}
-
-        <form method="post" action="{$smarty.server.PHP_SELF}?a=checkout" id="mainfrm">
-            <input type="hidden" name="submit" value="true" />
-            <input type="hidden" name="custtype" id="custtype" value="{$custtype}" />
-
-            <br /><br />
-
-            <h2>{$LANG.yourdetails}</h2>
-
-            <div style="float:left;width:20px;">&nbsp;</div><div class="signuptype{if !$loggedin && $custtype neq "existing"} active{/if}"{if !$loggedin} id="newcust"{/if}>{$LANG.newcustomer}</div><div class="signuptype{if $custtype eq "existing" && !$loggedin || $loggedin} active{/if}" id="existingcust">{$LANG.existingcustomer}</div>
+            <div style="float:left;width:20px;margin-buttom:0px;">&nbsp;</div>
+                <div style="background-color:rgb(31,74,138);color:#FFFFFF;"  
+                    class="signuptype{if !$loggedin && $custtype neq 'existing'} active{/if}"{if !$loggedin} id="newcust"{/if}>{$LANG.newcustomer}
+                </div>
+                <div class="signuptype{if $custtype eq "existing" && !$loggedin || $loggedin} active{/if}" id="existingcust">{$LANG.existingcustomer}
+                </div>
+            <!--</div>-->
             <div class="clear"></div>
 
             <div class="signupfields signupfields-existing{if $custtype eq "existing" && !$loggedin}{else} hidden{/if}" id="loginfrm">
-
-                <div class="col-sm-6 col-sm-offset-3">
+                <!--<div class="col-sm-6 col-sm-offset-3">-->
 
                     <div class="form-group">
                         <label for="inputEmail">{$LANG.clientareaemail}</label>
@@ -310,14 +281,14 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                         <input type="password" name="loginpw" class="form-control" id="inputPassword" placeholder="{$LANG.clientareapassword}"{if $loggedin} disabled{/if} />
                     </div>
 
-                </div>
+                <!--</div>-->
 
                 <div class="clearfix"></div>
 
             </div>
             <div class="signupfields{if $custtype eq "existing" && !$loggedin} hidden{/if}" id="signupfrm">
                 <div class="row">
-                    <div class="col-md-6">
+                    <!--<div class="col-md-6">-->
                         <div class="form-group">
                             {if $loggedin}
                                 <div class="row">
@@ -348,7 +319,7 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                                 <input type="text" name="lastname" id="lastname" value="{$clientsdetails.lastname}" class="form-control"{if !in_array('lastname', $clientsProfileOptionalFields)} required{/if}  />
                             {/if}
                         </div>
-                        <div class="form-group">
+                        <!--<div class="form-group">
                             {if $loggedin}
                                 <div class="row">
                                     <label class="col-sm-4 text-right">
@@ -362,7 +333,7 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                                 <label for="companyname" class="control-label">{$LANG.clientareacompanyname}</label>
                                 <input type="text" name="companyname" id="companyname" value="{$clientsdetails.companyname}" class="form-control" />
                             {/if}
-                        </div>
+                        </div>-->
                         <div class="form-group">
                             {if $loggedin}
                                 <div class="row">
@@ -393,8 +364,8 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                                 </div>
                             </div>
                         {/if}
-                    </div>
-                    <div class="col-md-6">
+                    <!--</div>
+                    <div class="col-md-6">-->
                         <div class="form-group">
                             {if $loggedin}
                                 <div class="row">
@@ -514,7 +485,7 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                                 </div>
                             {/foreach}
                         {/if}
-                    </div>
+                    <!--</div>-->
                 </div>
             </div>
 
@@ -547,16 +518,13 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                     <input type="submit" value="{$LANG.carttaxupdateselectionsupdate}" name="updateonly" class="btn btn-info btn-sm" />
                 </div>
             {/if}
-
-
-</div><!--end of content -->
-<div id="sidebar">
-
-
-
             {if $domainsinorder}
+<!-- end of left-->
+</div>
+<div id="sidebar">
                 <h2>{$LANG.domainregistrantinfo}</h2>
-                <select name="contact" id="inputDomainContact" class="form-control">
+
+                <select style="width:90%" name="contact" id="inputDomainContact" class="form-control">
                     <option value="">{$LANG.usedefaultcontact}</option>
                     {foreach from=$domaincontacts item=domcontact}
                         <option value="{$domcontact.id}"{if $contact==$domcontact.id} selected{/if}>{$domcontact.name}</option>
@@ -587,7 +555,7 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                                 <label for="domaincontactphonenumber" class="control-label">{$LANG.clientareaphonenumber}</label>
                                 <input type="text" name="domaincontactphonenumber" id="domaincontactphonenumber" value="{$domaincontact.phonenumber}" class="form-control" />
                             </div>
-                        </div>
+          checkout              </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="domaincontactaddress1" class="control-label">{$LANG.clientareaaddress1}</label>
@@ -603,9 +571,7 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                             </div>
                             <div class="form-group">
                                 <label for="domaincontactstate" class="control-label">{$LANG.clientareastate}</label>
-               .input-group-btn, .input-group .form-control {
-    display: table-cell;
-}                 <input type="text" name="domaincontactstate" id="domaincontactstate" value="{$domaincontact.state}" class="form-control" />
+                                <input type="text" name="domaincontactstate" id="domaincontactstate" value="{$domaincontact.state}" class="form-control" />
                             </div>
                             <div class="form-group">
                                 <label for="domaincontactpostcode" class="control-label">{$LANG.clientareapostcode}</label>
@@ -624,7 +590,7 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                 </div>
             {/if}
 
-            <!--<div class="row" id="paymentrow">-->
+            <!--<div class="row">-->
                 <!--<div class="col-md-6">-->
 
                     <div class="signupfields padded">
@@ -636,7 +602,7 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                             <div class="col-xs-10 col-xs-offset-1">
                                 <div class="input-group">
                                     <input type="text" name="promocode" id="inputPromoCode" class="form-control" placeholder="{lang key="orderPromoCodePlaceholder"}">
-                                    <span class="input-group-btn"><br/>
+                                    <span class="input-group-btn">
                                         <button type="submit" name="validatepromo" formnovalidate class="btn btn-warning" value="{$LANG.orderpromovalidatebutton}">
                                             {$LANG.orderpromovalidatebutton}
                                         </button>
@@ -654,7 +620,7 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                         </div>
                     {/if}
 
-                <!--</div>
+                <!--</div> 
                 <div class="col-md-6">-->
 
                     <div class="signupfields padded">
@@ -742,7 +708,7 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                                     <tr class="newccinfo"{if $clientsdetails.cclastfour && $ccinfo neq "new"} style="display:none;"{/if}>
                                         <td class="fieldlabel">{$LANG.creditcardcardissuenum}</td>
                                         <td class="fieldarea">
-                                            <input type="texhttps://billing.cloudurl.com/cart.php?a=view&carttpl=intestt" name="ccissuenum" value="{$ccissuenum}" size="5" maxlength="3" />
+                                            <input type="text" name="ccissuenum" value="{$ccissuenum}" size="5" maxlength="3" />
                                         </td>
                                     </tr>
                                 {/if}
@@ -770,10 +736,11 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                     </div>
 
                 <!--</div>-->
-            <!--</div> payment row-->
-            <div class="clearfix"></div>
-
-            {if $accepttos}
+            <!--</div>-->
+            
+            
+            
+              {if $accepttos}
                 <div align="center">
                     <label class="checkbox-inline">
                         <input type="checkbox" name="accepttos" id="accepttos" />
@@ -786,10 +753,22 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
 
             <div align="center">
                 <button type="submit" id="btnCompleteOrder"{if $cartitems==0} disabled{/if} onclick="this.value='{$LANG.pleasewait}'" class="btn btn-primary btn-lg" {if $custtype eq "existing" && !$loggedin}formnovalidate{/if}>
-                    {$LANG.checkout}
+                    <!--{$LANG.checkout}-->Get Started
                     &nbsp;<i class="fa fa-arrow-circle-right"></i>
                 </button>
             </div>
+            
+            
+            
+            
+    <!--end of right -->
+    </div>
+
+<!-- end of container -->
+</div>
+
+
+            <div class="clearfix"></div>
 
         </form>
 
@@ -798,12 +777,77 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
         <br /><br />
 
     {/if}
-    
-    
-    
-    
-</div><!--end of sidebar -->
-</div><!--endof container -->
+
+<br/>
+    {if $errormessage}
+        <div class="errorbox" style="display:block;">
+            {$errormessage|replace:'<li>':' &nbsp;#&nbsp; '} &nbsp;#&nbsp;
+        </div>
+    {elseif $promotioncode && $rawdiscount eq "0.00"}
+        <div class="errorbox" style="display:block;">
+            {$LANG.promoappliedbutnodiscount}
+        </div>
+    {/if}
+
+    {if $bundlewarnings}
+        <div class="cartwarningbox">
+            <strong>{$LANG.bundlereqsnotmet}</strong><br />
+            {foreach from=$bundlewarnings item=warning}
+                {$warning}<br />
+            {/foreach}
+        </div>
+    {/if}
+
+    {if !$loggedin && $currencies}
+        <div class="currencychooser">
+            <div class="btn-group" role="group">
+                {foreach from=$currencies item=curr}
+                    <a href="cart.php?a=view&currency={$curr.id}" class="btn btn-default{if $currency.id eq $curr.id} active{/if}">
+                        <img src="{$BASE_PATH_IMG}/flags/{if $curr.code eq "AUD"}au{elseif $curr.code eq "CAD"}ca{elseif $curr.code eq "EUR"}eu{elseif $curr.code eq "GBP"}gb{elseif $curr.code eq "INR"}in{elseif $curr.code eq "JPY"}jp{elseif $curr.code eq "USD"}us{elseif $curr.code eq "ZAR"}za{else}na{/if}.png" border="0" alt="" />
+                        {$curr.code}
+                    </a>
+                {/foreach}
+            </div>
+        </div>
+    {/if}
+
+    <div class="cartbuttons">
+        <!--<button type="button" class="btn btn-danger btn-sm" onclick="emptyCart();return false"><i class="fa fa-trash"></i> {$LANG.emptycart}</button>-->
+        <!--<a href="cart.php" class="btn btn-default btn-sm"><i class="fa fa-shopping-cart"></i> {$LANG.continueshopping}</a>-->
+    </div>
+    <!-- agree and checkout -->
+    <!--{if $accepttos}
+                <div align="center">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="accepttos" id="accepttos" />
+                        {$LANG.ordertosagreement}
+                        <a href="{$tosurl}" target="_blank">{$LANG.ordertos}</a>
+                    </label>
+                </div>
+                <br />
+    {/if}-->
+    <!--
+    <div align="right">
+        <script>
+            function submitMainForm(){
+                document.forms[0].submit();
+                alert("s");
+            }
+        </script>
+        <button type="submit" id="btnCompleteOrder"{if $cartitems==0} disabled{/if} onclick="this.value='{$LANG.pleasewait}'; submitMainForm();" class="btn btn-primary btn-lg" {if $custtype eq "existing" && !$loggedin}formnovalidate{/if}>
+            <!--{$LANG.checkout}Get Started
+            &nbsp;<i class="fa fa-arrow-circle-right"></i>
+        </button>
+    </div>-->
+    {foreach from=$gatewaysoutput item=gatewayoutput}
+        <div class="clear"></div>
+        <div class="cartbuttons">
+            {$gatewayoutput}
+        </div>
+    {/foreach}
+
+
+
     <div class="cartwarningbox">
         <img src="assets/img/padlock.gif" align="absmiddle" border="0" alt="Secure Transaction" />
         &nbsp;{$LANG.ordersecure} (<strong>{$ipaddress}</strong>) {$LANG.ordersecure2}
