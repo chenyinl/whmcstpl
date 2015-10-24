@@ -24,7 +24,7 @@
 #sidebar {
     float:left;
     padding: 0 0 0 20px;
-    /*width:475px;*/
+    width:455px;
 }
 
 #footer {
@@ -54,11 +54,24 @@ input.form-control{
 }
 
 #paymentrow{
-    width: 475px !important;
+    width: 455px !important;
 
 }
 .input-group-btn {
     display: inline !important;
+}
+
+.row{
+    /* align the domain reg info with promo code */
+    margin-left:-2px !important;
+}
+
+#inputDomainContact{
+    width: 389px !important;
+}
+
+.clear{
+    padding: 0 0 0 0
 }
 </style>
 
@@ -294,7 +307,9 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
 
             <h2>{$LANG.yourdetails}</h2>
 
-            <div style="float:left;width:20px;">&nbsp;</div><div class="signuptype{if !$loggedin && $custtype neq "existing"} active{/if}"{if !$loggedin} id="newcust"{/if}>{$LANG.newcustomer}</div><div class="signuptype{if $custtype eq "existing" && !$loggedin || $loggedin} active{/if}" id="existingcust">{$LANG.existingcustomer}</div>
+            <div style="float:left;width:20px;">&nbsp;</div>
+            <div style="background-color:rgb(31,74,138);color:#FFFFFF;" 
+                class="signuptype{if !$loggedin && $custtype neq "existing"} active{/if}"{if !$loggedin} id="newcust"{/if}>{$LANG.newcustomer}</div><div class="signuptype{if $custtype eq "existing" && !$loggedin || $loggedin} active{/if}" id="existingcust">{$LANG.existingcustomer}</div>
             <div class="clear"></div>
 
             <div class="signupfields signupfields-existing{if $custtype eq "existing" && !$loggedin}{else} hidden{/if}" id="loginfrm">
@@ -703,7 +718,7 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
                                 <tr class="newccinfo"{if $clientsdetails.cclastfour && $ccinfo neq "new"} style="display:none;"{/if}>
                                     <td class="fieldlabel">{$LANG.creditcardcardnumber}</td>
                                     <td class="fieldarea">
-                                        <input type="text" name="ccnumber" size="30" value="{$ccnumber}" autocomplete="off" />
+                                        <input type="text" name="ccnumber" size="20" value="{$ccnumber}" autocomplete="off" />
                                     </td>
                                 </tr>
                                 <tr class="newccinfo"{if $clientsdetails.cclastfour && $ccinfo neq "new"} style="display:none;"{/if}>
@@ -799,14 +814,15 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
 
     {/if}
     
-    
-    
-    
-</div><!--end of sidebar -->
-</div><!--endof container -->
-    <div class="cartwarningbox">
+     <div class="cartwarningbox">
         <img src="assets/img/padlock.gif" align="absmiddle" border="0" alt="Secure Transaction" />
         &nbsp;{$LANG.ordersecure} (<strong>{$ipaddress}</strong>) {$LANG.ordersecure2}
     </div>
-
+   
+    
+</div><!--end of sidebar -->
+</div><!--endof container -->
+    
+ 
+    
 </div>
