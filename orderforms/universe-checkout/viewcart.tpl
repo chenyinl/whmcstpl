@@ -150,12 +150,9 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
     </div>
 {/if}
 
-{include file= '/var/www/html/templates/orderforms/intest/paymentdescriptionform.tpl'}
 
-    <!-- hide empty cart and continue shopping button <div class="cartbuttons">
-        <button type="button" class="btn btn-danger btn-sm" onclick="emptyCart();return false"><i class="fa fa-trash"></i> {$LANG.emptycart}</button>
-        <a href="cart.php" class="btn btn-default btn-sm"><i class="fa fa-shopping-cart"></i> {$LANG.continueshopping}</a>
-    </div>-->
+
+    
 
     {foreach from=$gatewaysoutput item=gatewayoutput}
         <div class="clear"></div>
@@ -169,13 +166,9 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
         <form method="post" action="{$smarty.server.PHP_SELF}?a=checkout" id="mainfrm">
             <input type="hidden" name="submit" value="true" />
             <input type="hidden" name="custtype" id="custtype" value="{$custtype}" />
-
-            <br /><br />
-
-            
+     
 {include file= '/var/www/html/templates/orderforms/intest/yourdetails.tpl'}
-</div><!--end of content -->
-<div id="sidebar">
+
 
 {if $domainsinorder}
    {include file= '/var/www/html/templates/orderforms/intest/domainregistrantinfoform.tpl'}             
@@ -248,7 +241,10 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
     <br /><br />
 
     {/if}
-    
+</div><!--end of content -->
+<div id="sidebar">    
+    {include file= '/var/www/html/templates/orderforms/intest/paymentdescriptionform.tpl'}
+
      <div class="cartwarningbox">
         <img src="assets/img/padlock.gif" align="absmiddle" border="0" alt="Secure Transaction" />
         &nbsp;{$LANG.ordersecure} (<strong>{$ipaddress}</strong>) {$LANG.ordersecure2}

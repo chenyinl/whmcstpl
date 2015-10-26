@@ -128,3 +128,8 @@
         </table>
 
     </form>
+<!-- hide empty cart and continue shopping button <div class="cartbuttons">
+        <button type="button" class="btn btn-danger btn-sm" onclick="emptyCart();return false"><i class="fa fa-trash"></i> {$LANG.emptycart}</button>
+        <a href="cart.php" class="btn btn-default btn-sm"><i class="fa fa-shopping-cart"></i> {$LANG.continueshopping}</a>
+    </div>-->
+    
