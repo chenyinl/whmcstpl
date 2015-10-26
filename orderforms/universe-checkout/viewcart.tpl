@@ -1,77 +1,77 @@
 <style type="text/css">
-<!--
+
 	.steps li.step3 {  	
 		background: #d07f02 url("templates/{$template}/images/menuhover.png") top left repeat-x !important;
 		color: #fff;
 }
--->
-
 
 
 /* added by Chen */
-#container {
-    width:1000px;
-    margin: auto;
-    align:center;
-    /*width: 90%;*/
-}
+@media only screen and (min-width:1224px){
+    #container {
+        width:1000px;
+        margin: auto;
+        align:center;
+        /*width: 90%;*/
+    }
 
-#content {
-    float:left;
-    min-width:380px;
-}
+    #content {
+        float:left;
+        min-width:380px;
+    }
 
-#sidebar {
-    float:left;
-    padding: 0 0 0 20px;
-    width:455px;
-}
+    #sidebar {
+        float:left;
+        padding: 0 0 0 20px;
+        width:455px;
+    }
 
-#footer {
-    clear:both;
-}
+    #footer {
+        clear:both;
+    }
 
-input.form-control{
-    height: 24px;
-}
+    input.form-control{
+        height: 24px;
+    }
 
-#desc-price{
-    width: 475px;
-    position:absolute;
-    top: 0px;
-    right: 0px;
-    
-}
+    #desc-price{
+        width: 475px;
+        position:absolute;
+        top: 0px;
+        right: 0px;
+        
+    }
 
 
 
-#signupfrm{
-    width: 475px !important;
-}
-#order-modern table.cart {
+    #signupfrm{
+        width: 475px !important;
+    }
+    #order-modern table.cart {
 
-    width: 475px !important;
-}
+        width: 475px !important;
+    }
 
-#paymentrow{
-    width: 455px !important;
+    #paymentrow{
+        width: 455px !important;
 
-}
-.input-group-btn {
-    display: inline !important;
-}
+    }
+    .input-group-btn {
+        display: inline !important;
+    }
 
-.row{
-    /* align the domain reg info with promo code */
-    margin-left:-2px !important;
-}
+    .row{
+        /* align the domain reg info with promo code */
+        margin-left:-2px !important;
+    }
 
-#inputDomainContact{
-    width: 389px !important;
-}
+    #inputDomainContact{
+        width: 389px !important;
+    }
 
-.clear{
-    padding: 0 0 0 0
+    .clear{
+        padding: 0 0 0 0
+    }
 }
 </style>
 
