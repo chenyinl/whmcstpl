@@ -1,9 +1,7 @@
-{$debugging=TRUE}
-{debug}
 <style type="text/css">
 
 	.steps li.step3 {  	
-		background: #d07f02 url("templates/{$template}/images/menuhover.png") top left repeat-x !important;
+		background: #0f9d58; url("templates/{$template}/images/menuhover.png") top left repeat-x !important;
 		color: #fff;
 }
 
@@ -32,7 +30,7 @@
     }
 
     input.form-control{
-        height: 24px;
+        height: 28px;
     }
 
     #desc-price{
@@ -171,7 +169,7 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
 
 
 {if $domainsinorder}
-   {include file= '/var/www/html/templates/orderforms/intest/domainregistrantinfoform.tpl'}             
+   <!--include file= '/var/www/html/templates/orderforms/intest/domainregistrantinfoform.tpl'-->         
 {/if}
 
 <!--<div class="row" id="paymentrow">-->
