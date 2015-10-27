@@ -25,8 +25,8 @@
 				<img src="templates/{$template}/images/logo.png" class="img-respond img-logo" alt="{$companyname} logo" />
 			</a>
 		</div>
-			
-		{include file="$template/includes/menu.tpl"} {* This line loads the dropdown menu *}	
+
+		{include file="$template/includes/menusimple.tpl"} {* This line loads simple menu *}
 			
 		<div class="clear">&nbsp;</div>	
 			
