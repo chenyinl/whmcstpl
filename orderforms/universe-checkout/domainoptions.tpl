@@ -21,6 +21,8 @@
 
 
 {assign var='continueok' value=true}
+{* extra click to continue button *}
+{if $continueok}<br /><div align="center"><input type="submit" value="{$LANG.ordercontinuebutton}" class="btn btn-primary" /></div>{/if}
 
 {elseif $status eq "unavailable"}
 

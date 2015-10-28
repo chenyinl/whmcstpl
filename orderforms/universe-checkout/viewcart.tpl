@@ -8,7 +8,8 @@
 /* added by Chen */
 @media only screen and (min-width:1224px){
     #container {
-        width:1000px;
+        /* less then 1006 the right will go down */
+        width:1010px;
         margin: auto;
         align:center;
         /*width: 90%;*/
@@ -84,6 +85,20 @@
         display: block;
         margin-left: auto;
         margin-right: auto;
+    }
+
+    #order-modern table.cart tr.total td {
+        background-color: #f0f6fa !important;
+        color: #31708f !important;
+    }
+    /* change the total charge amount to blue instead of green */
+    #order-modern table.cart tr.recurring td {
+        background-color: #d9edf7 !important;
+    }
+    
+    /* make the payment table same width with your detail table */
+    #order-modern .signupfields {
+        width: 100% !important;
     }
 }
 </style>

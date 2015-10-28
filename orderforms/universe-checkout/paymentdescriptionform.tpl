@@ -16,7 +16,7 @@
                             {/foreach}
                         {/if}
                         <a href="{$smarty.server.PHP_SELF}?a=confproduct&i={$num}" class="cartedit">[{$LANG.carteditproductconfig}]</a>
-                        <a href="#" onclick="removeItem('p','{$num}');return false" class="cartremove">[{$LANG.cartremove}]</a>
+                        <!--<a href="#" onclick="removeItem('p','{$num}');return false" class="cartremove">[{$LANG.cartremove}]</a>-->
                         {if $product.allowqty}
                         <br /><br />
                         <div align="right">{$LANG.cartqtyenterquantity} <input type="text" name="qty[{$num}]" size="3" value="{$product.qty}" /> <input type="submit" value="{$LANG.cartqtyupdate}" class="btn btn-default btn-sm" /></div>
@@ -39,7 +39,7 @@
                     <td>
                         <strong>{$addon.name}</strong><br />
                         {$addon.productname}{if $addon.domainname} - {$addon.domainname}<br />{/if}
-                        <a href="#" onclick="removeItem('a','{$num}');return false" class="cartremove">[{$LANG.cartremove}]</a>
+                        <!--<a href="#" onclick="removeItem('a','{$num}');return false" class="cartremove">[{$LANG.cartremove}]</a>-->
                     </td>
                     <td class="text-center"><strong>{$addon.pricingtext}</strong></td>
                 </tr>
@@ -53,7 +53,7 @@
                         {if $domain.emailforwarding}&nbsp;&raquo; {$LANG.domainemailforwarding}<br />{/if}
                         {if $domain.idprotection}&nbsp;&raquo; {$LANG.domainidprotection}<br />{/if}
                         <a href="{$smarty.server.PHP_SELF}?a=confdomains" class="cartedit">[{$LANG.cartconfigdomainextras}]</a>
-                        <a href="#" onclick="removeItem('d','{$num}');return false" class="cartremove">[{$LANG.cartremove}]</a>
+                        <!--<a href="#" onclick="removeItem('d','{$num}');return false" class="cartremove">[{$LANG.cartremove}]</a>-->
                     </td>
                     <td class="text-center">
                         <strong>{$domain.price}</strong>
@@ -68,7 +68,7 @@
                         {if $domain.dnsmanagement}&nbsp;&raquo; {$LANG.domaindnsmanagement}<br />{/if}
                         {if $domain.emailforwarding}&nbsp;&raquo; {$LANG.domainemailforwarding}<br />{/if}
                         {if $domain.idprotection}&nbsp;&raquo; {$LANG.domainidprotection}<br />{/if}
-                        <a href="#" onclick="removeItem('r','{$num}');return false" class="cartremove">[{$LANG.cartremove}]</a>
+                        <!--<a href="#" onclick="removeItem('r','{$num}');return false" class="cartremove">[{$LANG.cartremove}]</a>-->
                     </td>
                     <td class="text-center">
                         <strong>{$domain.price}</strong>
