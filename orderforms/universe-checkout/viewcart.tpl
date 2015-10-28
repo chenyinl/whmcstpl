@@ -45,8 +45,17 @@
         width: 475px !important;
     }
     #order-modern table.cart {
+        /* same width with the warning mesg */
+        width: 433px !important;
 
-        width: 475px !important;
+        /* lower to be align with your details table */
+        margin-top: 25px;
+    }
+
+    .whmcscontainer table.cart th {
+
+        border-style: none !important;
+
     }
 
     #paymentrow{
@@ -68,6 +77,13 @@
 
     .clear{
         padding: 0 0 0 0
+    }
+
+    /* put the in good company image in middle of div */
+    #ingoodcompanyimg{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 </style>
@@ -165,7 +181,7 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
             <input type="hidden" name="submit" value="true" />
             <input type="hidden" name="custtype" id="custtype" value="{$custtype}" />
      
-{include file= '/var/www/html/templates/orderforms/intest/yourdetails.tpl'}
+{include file= '/var/www/html/templates/orderforms/universe-checkout/yourdetails.tpl'}
 
 
 {if $domainsinorder}
@@ -206,7 +222,7 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
     <div class="col-md-6">-->
 
         <div class="signupfields padded">
-        {include file= '/var/www/html/templates/orderforms/intest/paymentmethodform.tpl'}
+        {include file= '/var/www/html/templates/orderforms/universe-checkout/paymentmethodform.tpl'}
         </div>
 
     <!--</div>-->
@@ -241,8 +257,8 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
     {/if}
 </div><!--end of content -->
 <div id="sidebar">    
-    {include file= '/var/www/html/templates/orderforms/intest/paymentdescriptionform.tpl'}
-
+    {include file= '/var/www/html/templates/orderforms/universe-checkout/paymentdescriptionform.tpl'}
+    <img id="ingoodcompanyimg" src="/templates/{$template}/images/order-ingoodcompany.png" />
      <div class="cartwarningbox">
         <img src="assets/img/padlock.gif" align="absmiddle" border="0" alt="Secure Transaction" />
         &nbsp;{$LANG.ordersecure} (<strong>{$ipaddress}</strong>) {$LANG.ordersecure2}
