@@ -70,6 +70,7 @@
     .row{
         /* align the domain reg info with promo code */
         margin-left:-2px !important;
+        margin-right: 0px !important;
     }
 
     #inputDomainContact{

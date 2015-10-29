@@ -1,5 +1,9 @@
 {* Note - You can control a lot of aspects of this page from inside the settings area. If you are looking to make changes to this page we recommend re-creating it with our ready-made HTML code. Due to the amount of functionality available to this file it may be hard to edit. *}
-
+<style>
+.box .popular {
+	padding: 0px;
+}
+</style>
 {if $multilanguagesupport eq "on" && $multilanguagesupport_custom1 eq "on"}{* If multi language support is enabled *}
 
 {if $custom1_layout_type eq 'boxes'}
@@ -7,6 +11,7 @@
 	<div class="featureboxes">
 
 {if $custom1_layout_plans gte '1'}
+
 
 		<div class="box box1{if $c1hp1_highlight eq "on"} highlight{/if}"{if $c1hp1_productlink} onclick="location.href='{$c1hp1_productlink}';"{/if}>
 			<div class="popular"></div>

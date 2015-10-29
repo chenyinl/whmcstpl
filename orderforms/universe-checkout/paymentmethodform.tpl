@@ -4,6 +4,7 @@
                                 <input type="radio" name="paymentmethod" value="{$gateway.sysname}" id="pgbtn{$num}" onclick="{if $gateway.type eq "CC"}showCCForm(){else}hideCCForm(){/if}"{if $selectedgateway eq $gateway.sysname} checked{/if} />
                                 {$gateway.name}
                             </label>
+                            {if $gateway.type eq "CC"}<img src="/templates/{$template}/images/credit_cards.gif"/>{/if}
                         {/foreach}
 
                         <br /><br />
