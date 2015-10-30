@@ -8,7 +8,8 @@
 /* added by Chen */
 @media only screen and (min-width:1224px){
     #container {
-        width:1000px;
+        /* less then 1006 the right will go down */
+        width:1010px;
         margin: auto;
         align:center;
         /*width: 90%;*/
@@ -45,8 +46,17 @@
         width: 475px !important;
     }
     #order-modern table.cart {
+        /* same width with the warning mesg */
+        width: 433px !important;
 
-        width: 475px !important;
+        /* lower to be align with your details table */
+        margin-top: 25px;
+    }
+
+    .whmcscontainer table.cart th {
+
+        border-style: none !important;
+
     }
 
     #paymentrow{
@@ -60,6 +70,7 @@
     .row{
         /* align the domain reg info with promo code */
         margin-left:-2px !important;
+        margin-right: 0px !important;
     }
 
     #inputDomainContact{
@@ -68,6 +79,27 @@
 
     .clear{
         padding: 0 0 0 0
+    }
+
+    /* put the in good company image in middle of div */
+    #ingoodcompanyimg{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #order-modern table.cart tr.total td {
+        background-color: #f0f6fa !important;
+        color: #31708f !important;
+    }
+    /* change the total charge amount to blue instead of green */
+    #order-modern table.cart tr.recurring td {
+        background-color: #d9edf7 !important;
+    }
+    
+    /* make the payment table same width with your detail table */
+    #order-modern .signupfields {
+        width: 100% !important;
     }
 }
 </style>
@@ -165,7 +197,7 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
             <input type="hidden" name="submit" value="true" />
             <input type="hidden" name="custtype" id="custtype" value="{$custtype}" />
      
-{include file= '/var/www/html/templates/orderforms/intest/yourdetails.tpl'}
+{include file= '/var/www/html/templates/orderforms/universe-checkout/yourdetails.tpl'}
 
 
 {if $domainsinorder}
@@ -206,7 +238,7 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
     <div class="col-md-6">-->
 
         <div class="signupfields padded">
-        {include file= '/var/www/html/templates/orderforms/intest/paymentmethodform.tpl'}
+        {include file= '/var/www/html/templates/orderforms/universe-checkout/paymentmethodform.tpl'}
         </div>
 
     <!--</div>-->
@@ -241,8 +273,8 @@ window.langPasswordStrong = "{$LANG.pwstrengthstrong}";
     {/if}
 </div><!--end of content -->
 <div id="sidebar">    
-    {include file= '/var/www/html/templates/orderforms/intest/paymentdescriptionform.tpl'}
-
+    {include file= '/var/www/html/templates/orderforms/universe-checkout/paymentdescriptionform.tpl'}
+    <img id="ingoodcompanyimg" src="/templates/{$template}/images/order-ingoodcompany.png" />
      <div class="cartwarningbox">
         <img src="assets/img/padlock.gif" align="absmiddle" border="0" alt="Secure Transaction" />
         &nbsp;{$LANG.ordersecure} (<strong>{$ipaddress}</strong>) {$LANG.ordersecure2}
