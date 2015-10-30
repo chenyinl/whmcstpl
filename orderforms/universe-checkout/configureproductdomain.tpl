@@ -1,3 +1,4 @@
+<!-- configureproductdomain.tpl-->
 <style type="text/css">
 <!--
 	.steps li.step2 {  
@@ -6,6 +7,16 @@
 
 }
 -->
+/* try to make the page not to shrunk */
+h1 {
+    margin: 8px !important;
+}
+p{
+    margin: 8px !important;
+}
+label.radio-inline {
+    margin: 1px;
+}
 </style>
 
 <script type="text/javascript" src="templates/orderforms/{$carttpl}/js/main.js"></script>
