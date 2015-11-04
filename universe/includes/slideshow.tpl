@@ -97,7 +97,19 @@
 </noscript>
 
 {else}
-
+<style>
+@media( min-width: 530px){
+	#getstartnowbutton{
+		display:none;
+	}
+}
+@media( max-width: 529px){
+	#getstartnowbutton{
+		margin: 0 0 0 -30px;
+	}
+}
+</style>
+<p id="getstartnowbutton"><a style="background: url(templates/{$template}/images/specialoffer.png); width:514px; height: 76px; padding-left: 131px; padding-top: 8px;" href="{$LANG.banneroff_link}" class="button1 color2"><button style="width:180px; height: 56px; font-size:20px;" class="button1 color2">{$LANG.banneroff_buttontext}</button></a></p>
 <div class="slidercontainer slidernojs">
 
 <div class="container1">
