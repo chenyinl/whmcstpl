@@ -15,7 +15,7 @@ p{
     margin: 8px !important;
 }
 label.radio-inline {
-    margin: 1px;
+    margin: 3px;
 }
 </style>
 
