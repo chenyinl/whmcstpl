@@ -34,6 +34,7 @@ nav ul li a {
     {/if}
 
     <ul>
+        <li><a href="http://blog.cloudurl.com">Blog</a></li>
         <li><a href="portal.php">Help</a></li>
         <li><a href="affiliate-program.php">Promote CloudURL<a/></li>
         <li><a href="domainchecker.php">{$LANG.menu_domains}</a><li>
